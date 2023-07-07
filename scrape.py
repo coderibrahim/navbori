@@ -1,22 +1,22 @@
 import requests
 from bs4 import BeautifulSoup
-from bottle import Bottle, request
-import json
-from bson import ObjectId
-
+from bottle import Bottle, request, json
 from pymongo import MongoClient
 
 class Functionalities:
     def scrape_website(self, barcode_number):
-        global a_text, img_src, a_href
         search_url = 'https://marketkarsilastir.com/ara/' + barcode_number
 
         response = requests.get(search_url)
         soup = BeautifulSoup(response.content, 'html.parser')
 
         products_div = soup.find('div', class_='products')
+        if products_div is None:
+            return {'error': 'Products not found'}
 
         ul_element = products_div.find('ul')
+        if ul_element is None:
+            return {'error': 'List not found'}
 
         li_items = ul_element.find_all('li')
 
@@ -56,31 +56,8 @@ class Functionalities:
                     'recently_changed_price': recently_changed_price,
                     'price': price
                 }
-                scraped_products_data.append(data)
 
-        # MongoDB Connection
-        client = MongoClient('mongodb+srv://ibrahim:plaka65jk21706556..@cluster0.sboemja.mongodb.net/test')
-        db = client['Navbori']
-        collection_product = db['products']
-        collection_products_with_price = db['products_with_details']
-        inserted_ids = []
-
-        for data in scraped_products_data:
-            result = collection_products_with_price.insert_one(data)
-            inserted_ids.append(str(result.inserted_id))
-
-        inserted_ids_str = ', '.join(inserted_ids)
-
-        product = {
-            'barcode_number': barcode_number,
-            'name': a_text,
-            'image': img_src,
-            'address': a_href,
-            'prices': inserted_ids_str
-        }
-
-        collection_product.insert_one(product)
-        return scraped_products_data
+            return scraped_products_data
 
 
 app = Bottle()
@@ -94,9 +71,13 @@ def scrape_handler():
         return json.dumps({'error': 'Barcode number is missing'})
 
     results = func.scrape_website(barcode_number)
-    results_serializable = json.dumps(results, default=str)
 
+    if 'error' in results:
+        return json.dumps({'error': results['error']})
+
+    results_serializable = json.dumps(results, default=str)
     return results_serializable
+
 
 if __name__ == '__main__':
     app.run(debug=True)
