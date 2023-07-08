@@ -2,6 +2,8 @@ import requests
 from bs4 import BeautifulSoup
 from bottle import Bottle, request
 import json
+import http.client
+
 from bson import ObjectId
 from pymongo import MongoClient
 import requests
@@ -14,16 +16,18 @@ class Functionalities:
     def scrape_website(self, barcode_number):
         search_url = 'https://marketkarsilastir.com/ara/' + barcode_number
 
-        sa_key = 'faa9063942f146fd9cd6f0cae6663c83'  # paste here
-        sa_api = 'https://api.scrapingant.com/v2/general'
-        qParams = {'url': search_url, 'x-api-key': sa_key}
-        reqUrl = f'{sa_api}?{urllib.parse.urlencode(qParams)}'
-        r = requests.get(reqUrl)
+        conn = http.client.HTTPSConnection("api.scrapingant.com")
 
-        #response = requests.get(search_url)
-        #response = requests.get(search_url, headers=headers)
+        conn.request("GET",
+                     "/v2/general?url=https%3A%2F%2Fmarketkarsilastir.com%2Fara%2F" + barcode_number + "&x-api-key=faa9063942f146fd9cd6f0cae6663c83")
 
-        soup = BeautifulSoup(r.content, 'html.parser')
+        res = conn.getresponse()
+        data = res.read()
+
+        # response = requests.get(search_url)
+        # response = requests.get(search_url, headers=headers)
+
+        soup = BeautifulSoup(data.decode("utf-8"), 'html.parser')
 
         print("soup data:")
         print(soup.prettify())
