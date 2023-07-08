@@ -29,7 +29,7 @@ class Functionalities:
         }
 
         response = requests.get(url, headers=headers, params=querystring)
-        soup = BeautifulSoup(response.content, 'html.parser')
+        soup = BeautifulSoup(response.json(), 'html.parser')
 
         print("soup data:")
         print(soup.prettify())
