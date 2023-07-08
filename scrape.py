@@ -3,7 +3,6 @@ from bs4 import BeautifulSoup
 from bottle import Bottle, request
 import json
 from bson import ObjectId
-
 from pymongo import MongoClient
 
 class Functionalities:
