@@ -2,29 +2,26 @@ import requests
 from bs4 import BeautifulSoup
 from bottle import Bottle, request
 import json
-from bson import ObjectId
-from pymongo import MongoClient
-import json
-from fake_useragent import UserAgent
-
-
+from random_user_agent.user_agent import UserAgent
+from random_user_agent.params import SoftwareName, OperatingSystem
+import time
 
 class Functionalities:
     def scrape_website(self, barcode_number):
-        search_url = 'https://marketkarsilastir.com/ara/' + barcode_number
-        location = '/home/user/fake_useragent%s.json' % fake_useragent.VERSION
-        ua = UserAgent()
+        user_agent_rotator = UserAgent(software_names=[SoftwareName.CHROME.value], operating_systems=[OperatingSystem.WINDOWS.value])
+        user_agent = user_agent_rotator.get_random_user_agent()
 
         headers = {
-            'User-Agent': ua.random
+            'User-Agent': user_agent,
+            'Accept-Language': 'en-US,en;q=0.9',
         }
-        #response = requests.get(search_url)
-        response = requests.get(search_url, headers=headers)
 
+        search_url = 'https://marketkarsilastir.com/ara/' + barcode_number
+
+        response = requests.get(search_url, headers=headers)
         soup = BeautifulSoup(response.content, 'html.parser')
 
-        print("soup data:")
-        print(soup.prettify())
+        print("soupe result : " + soup.prettify())
 
         products_div = soup.find('div', class_='products')
         if products_div is None:
@@ -46,7 +43,7 @@ class Functionalities:
             a_href = a_element['href']
             a_text = a_element.text.strip()
 
-            response = requests.get("https://marketkarsilastir.com/" + a_href)
+            response = requests.get("https://marketkarsilastir.com/" + a_href, headers=headers)
             inner_soup = BeautifulSoup(response.content, 'html.parser')
 
             table = inner_soup.find('table', class_='table text-center table-hover')
@@ -73,6 +70,9 @@ class Functionalities:
                     'price': price
                 }
                 scraped_products_data.append(data)
+
+            # Delay between requests to avoid being detected as a bot
+            time.sleep(1)
 
         return scraped_products_data
 
