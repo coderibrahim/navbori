@@ -8,18 +8,17 @@ import json
 
 class Functionalities:
     def scrape_website(self, barcode_number):
-        global products_div
         search_url = 'https://marketkarsilastir.com/ara/' + barcode_number
-        try:
-            response = requests.get(search_url)
-            soup = BeautifulSoup(response.content, 'html.parser')
 
-            products_div = soup.find('div', class_='products')
-            if products_div is None:
-                return {'error': 'Products not found'}
-        except:
-            print("An exception occurred")
+        response = requests.get(search_url)
+        soup = BeautifulSoup(response.content, 'html.parser')
 
+        print("soupe data : " + soup)
+        print("response data : " + response)
+
+        products_div = soup.find('div', class_='products')
+        if products_div is None:
+            return {'error': 'Products not found'}
 
         ul_element = products_div.find('ul')
         if ul_element is None:
