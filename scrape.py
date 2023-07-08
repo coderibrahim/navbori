@@ -14,11 +14,11 @@ class Functionalities:
         search_url = 'https://marketkarsilastir.com/ara/' + barcode_number
 
         proxies = {
-            'http': f'http://159.223.183.111:80',
-            'https': f'http://159.223.183.111:80',
+            'http': f'http://38.156.73.15:8080',
+            'https': f'http://38.156.73.15:8080',
         }
 
-        response = requests.get(search_url, proxies=proxies)
+        response = requests.get(search_url, proxies=proxies, timeout=10)
 
         soup = BeautifulSoup(response.content, 'html.parser')
 
