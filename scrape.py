@@ -11,8 +11,8 @@ import cloudscraper
 class Functionalities:
     def scrape_website(self, barcode_number):
         search_url = 'https://marketkarsilastir.com/ara/' + barcode_number
-        #scraper = cloudscraper.create_scraper(disableCloudflareV1=True)
-        scraper = cloudscraper.create_scraper(delay=10, browser='chrome')
+        scraper = cloudscraper.create_scraper(disableCloudflareV1=True)
+        #scraper = cloudscraper.create_scraper(delay=10, browser='chrome')
 
         response = scraper.get(search_url)
 
