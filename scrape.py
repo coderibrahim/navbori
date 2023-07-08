@@ -13,8 +13,8 @@ class Functionalities:
         response = requests.get(search_url)
         soup = BeautifulSoup(response.content, 'html.parser')
 
-        print("soupe data : " + soup)
-        print("response data : " + response)
+        print("soup data:")
+        print(soup.prettify())
 
         products_div = soup.find('div', class_='products')
         if products_div is None:
