@@ -18,8 +18,17 @@ class Functionalities:
             'https': f'http://38.156.73.15:8080',
         }
 
-        response = requests.get(search_url, proxies=proxies, timeout=10)
+        #response = requests.get(search_url, proxies=proxies, timeout=10)
+        url = "https://scrapers-proxy2.p.rapidapi.com/standard"
 
+        querystring = {"url": search_url}
+
+        headers = {
+            "X-RapidAPI-Key": "1fe3b92a9bmsh2bde008e1a81054p1f19a4jsnd2a80d1560f3",
+            "X-RapidAPI-Host": "scrapers-proxy2.p.rapidapi.com"
+        }
+
+        response = requests.get(url, headers=headers, params=querystring)
         soup = BeautifulSoup(response.content, 'html.parser')
 
         print("soup data:")
