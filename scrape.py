@@ -24,6 +24,7 @@ class Functionalities:
         res = conn.getresponse()
         data = res.read()
 
+        print(data.decode("utf-8"))
         # response = requests.get(search_url)
         # response = requests.get(search_url, headers=headers)
 
