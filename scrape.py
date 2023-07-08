@@ -4,6 +4,8 @@ from bottle import Bottle, request
 import json
 from bson import ObjectId
 from pymongo import MongoClient
+import requests
+import urllib.parse
 import json
 import cloudscraper
 
@@ -12,14 +14,16 @@ class Functionalities:
     def scrape_website(self, barcode_number):
         search_url = 'https://marketkarsilastir.com/ara/' + barcode_number
 
-        headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'
-        }
-        response = requests.get(search_url)
+        sa_key = 'faa9063942f146fd9cd6f0cae6663c83'  # paste here
+        sa_api = 'https://api.scrapingant.com/v2/general'
+        qParams = {'url': search_url, 'x-api-key': sa_key}
+        reqUrl = f'{sa_api}?{urllib.parse.urlencode(qParams)}'
+        r = requests.get(reqUrl)
+
+        #response = requests.get(search_url)
         #response = requests.get(search_url, headers=headers)
-        scraper = cloudscraper.create_scraper(delay=10, browser='chrome')
-        response = scraper.get(search_url).text
-        soup = BeautifulSoup(response, 'html.parser')
+
+        soup = BeautifulSoup(r.content, 'html.parser')
 
         print("soup data:")
         print(soup.prettify())
