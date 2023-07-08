@@ -13,22 +13,14 @@ class Functionalities:
     def scrape_website(self, barcode_number):
         search_url = 'https://marketkarsilastir.com/ara/' + barcode_number
 
-        time.sleep(5)
+        proxies = {
+            'http': f'http://159.223.183.111:80',
+            'https': f'http://159.223.183.111:80',
+        }
 
-        conn = http.client.HTTPSConnection("api.scrapingant.com")
+        response = requests.get(search_url, proxies=proxies)
 
-        conn.request("GET",
-                     "/v2/general?url=https%3A%2F%2Fmarketkarsilastir.com%2Fara%2F" + barcode_number + "&x-api-key=41d3b5574ae44e74ad508132f2f52e13&proxy_type=residential&browser=false")
-
-
-        res = conn.getresponse()
-        data = res.read()
-
-        print(data.decode("utf-8"))
-        # response = requests.get(search_url)
-        # response = requests.get(search_url, headers=headers)
-
-        soup = BeautifulSoup(data.decode("utf-8"), 'html.parser')
+        soup = BeautifulSoup(response.content, 'html.parser')
 
         print("soup data:")
         print(soup.prettify())
