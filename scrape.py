@@ -1,20 +1,19 @@
+import time
+
 import requests
 from bs4 import BeautifulSoup
 from bottle import Bottle, request
-import json
 import http.client
-
 from bson import ObjectId
 from pymongo import MongoClient
-import requests
-import urllib.parse
 import json
-import cloudscraper
 
 
 class Functionalities:
     def scrape_website(self, barcode_number):
         search_url = 'https://marketkarsilastir.com/ara/' + barcode_number
+
+        time.sleep(5)
 
         conn = http.client.HTTPSConnection("api.scrapingant.com")
 
