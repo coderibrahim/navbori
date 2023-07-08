@@ -1,7 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
 from bottle import Bottle, request
-from fake_useragent import UserAgent
 import json
 from bson import ObjectId
 from pymongo import MongoClient
@@ -10,9 +9,8 @@ import json
 class Functionalities:
     def scrape_website(self, barcode_number):
         search_url = 'https://marketkarsilastir.com/ara/' + barcode_number
-        user_agent = UserAgent()
         headers = {
-            'User-Agent': user_agent.random
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'
         }
         #response = requests.get(search_url)
         response = requests.get(search_url, headers=headers)
