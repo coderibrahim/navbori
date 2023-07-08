@@ -13,12 +13,6 @@ class Functionalities:
     def scrape_website(self, barcode_number):
         search_url = 'https://marketkarsilastir.com/ara/' + barcode_number
 
-        proxies = {
-            'http': f'http://38.156.73.15:8080',
-            'https': f'http://38.156.73.15:8080',
-        }
-
-        #response = requests.get(search_url, proxies=proxies, timeout=10)
         url = "https://scrapers-proxy2.p.rapidapi.com/standard"
 
         querystring = {"url": search_url}
@@ -28,8 +22,8 @@ class Functionalities:
             "X-RapidAPI-Host": "scrapers-proxy2.p.rapidapi.com"
         }
 
-        response = requests.get(url, headers=headers, params=querystring)
-        soup = BeautifulSoup(response.json(), 'html.parser')
+        response = requests.get(url, headers=headers, params=querystring, timeout=30)
+        soup = BeautifulSoup(response, 'html.parser')
 
         print("soup data:")
         print(soup.prettify())
