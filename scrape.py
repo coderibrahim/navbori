@@ -2,26 +2,23 @@ import requests
 from bs4 import BeautifulSoup
 from bottle import Bottle, request
 import json
-from random_user_agent.user_agent import UserAgent
-from random_user_agent.params import SoftwareName, OperatingSystem
-import time
+from bson import ObjectId
+from pymongo import MongoClient
+import json
 
 class Functionalities:
     def scrape_website(self, barcode_number):
-        user_agent_rotator = UserAgent(software_names=[SoftwareName.CHROME.value], operating_systems=[OperatingSystem.WINDOWS.value])
-        user_agent = user_agent_rotator.get_random_user_agent()
-
-        headers = {
-            'User-Agent': user_agent,
-            'Accept-Language': 'en-US,en;q=0.9',
-        }
-
         search_url = 'https://marketkarsilastir.com/ara/' + barcode_number
-
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'
+        }
+        #response = requests.get(search_url)
         response = requests.get(search_url, headers=headers)
+
         soup = BeautifulSoup(response.content, 'html.parser')
 
-        print("soupe result : " + soup.prettify())
+        print("soup data:")
+        print(soup.prettify())
 
         products_div = soup.find('div', class_='products')
         if products_div is None:
@@ -43,7 +40,7 @@ class Functionalities:
             a_href = a_element['href']
             a_text = a_element.text.strip()
 
-            response = requests.get("https://marketkarsilastir.com/" + a_href, headers=headers)
+            response = requests.get("https://marketkarsilastir.com/" + a_href)
             inner_soup = BeautifulSoup(response.content, 'html.parser')
 
             table = inner_soup.find('table', class_='table text-center table-hover')
@@ -70,9 +67,6 @@ class Functionalities:
                     'price': price
                 }
                 scraped_products_data.append(data)
-
-            # Delay between requests to avoid being detected as a bot
-            time.sleep(1)
 
         return scraped_products_data
 
