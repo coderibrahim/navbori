@@ -59,27 +59,27 @@ class Functionalities:
                 scraped_products_data.append(data)
 
         # MongoDB Connection
-        client = MongoClient('mongodb+srv://ibrahim:plaka65jk21706556..@cluster0.sboemja.mongodb.net/test')
-        db = client['Navbori']
-        collection_product = db['products']
-        collection_products_with_price = db['products_with_details']
-        inserted_ids = []
+        #client = MongoClient('mongodb+srv://ibrahim:plaka65jk21706556..@cluster0.sboemja.mongodb.net/test')
+        #db = client['Navbori']
+        #collection_product = db['products']
+        #collection_products_with_price = db['products_with_details']
+        #inserted_ids = []
 
-        for data in scraped_products_data:
-            result = collection_products_with_price.insert_one(data)
-            inserted_ids.append(str(result.inserted_id))
+        #for data in scraped_products_data:
+            #    result = collection_products_with_price.insert_one(data)
+        #    inserted_ids.append(str(result.inserted_id))
 
-        inserted_ids_str = ', '.join(inserted_ids)
+        #inserted_ids_str = ', '.join(inserted_ids)
 
-        product = {
-            'barcode_number': barcode_number,
-            'name': a_text,
-            'image': img_src,
-            'address': a_href,
-            'prices': inserted_ids_str
-        }
+        #product = {
+            #    'barcode_number': barcode_number,
+            #    'name': a_text,
+            #    'image': img_src,
+            #   'address': a_href,
+        #   'prices': inserted_ids_str
+        #}
 
-        collection_product.insert_one(product)
+        #collection_product.insert_one(product)
         return scraped_products_data
 
 
