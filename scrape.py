@@ -1,6 +1,10 @@
 import requests
 from bs4 import BeautifulSoup
-from bottle import Bottle, request, json
+from bottle import Bottle, request
+import json
+from bson import ObjectId
+from pymongo import MongoClient
+import json
 
 class Functionalities:
     def scrape_website(self, barcode_number):
