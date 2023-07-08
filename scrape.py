@@ -5,7 +5,7 @@ import json
 from bson import ObjectId
 from pymongo import MongoClient
 import json
-import fake_useragent
+from fake_useragent import UserAgent
 
 
 
@@ -13,8 +13,8 @@ class Functionalities:
     def scrape_website(self, barcode_number):
         search_url = 'https://marketkarsilastir.com/ara/' + barcode_number
         location = '/home/user/fake_useragent%s.json' % fake_useragent.VERSION
+        ua = UserAgent()
 
-        ua = fake_useragent.UserAgent(use_external_data=True, cache_path=location)
         headers = {
             'User-Agent': ua.random
         }
