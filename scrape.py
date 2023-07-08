@@ -19,7 +19,7 @@ class Functionalities:
         conn = http.client.HTTPSConnection("api.scrapingant.com")
 
         conn.request("GET",
-                     "/v2/general?url=https%3A%2F%2Fmarketkarsilastir.com%2Fara%2F" + barcode_number + "&x-api-key=faa9063942f146fd9cd6f0cae6663c83")
+                     "/v2/general?url=https%3A%2F%2Fmarketkarsilastir.com%2Fara%2F" + barcode_number + "&x-api-key=41d3b5574ae44e74ad508132f2f52e13")
 
         res = conn.getresponse()
         data = res.read()
