@@ -101,7 +101,7 @@ func = Functionalities()
 
 @app.route('/scrape', method='GET')
 def scrape_handler():
-    barcode_number = request.query.get('barcode_number')
+    barcode_number = request.query.get('number')
     if barcode_number is None:
         return json.dumps({'error': 'Barcode number is missing'})
 
