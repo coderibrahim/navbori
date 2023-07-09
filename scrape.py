@@ -20,17 +20,11 @@ class Functionalities:
             "X-RapidAPI-Host": "scrapers-proxy2.p.rapidapi.com"
         }
 
-        try:
-            response = requests.get(url, headers=headers, params=querystring, timeout=30)
-            response.raise_for_status()  # Hata durumunda istisna oluştur
+        response = requests.get(url, headers=headers, params=querystring, timeout=30)
 
-            soup = BeautifulSoup(response.content, 'html.parser')
-            print("soup data:")
-            print(soup.prettify())
-
-            # Diğer işlemler devam eder...
-        except requests.exceptions.RequestException as e:
-            print("Hata:", e)
+        soup = BeautifulSoup(response.content, 'html.parser')
+        print("soup data:")
+        print(soup.prettify())    
 
         products_div = soup.find('div', class_='products')
         if products_div is None:
