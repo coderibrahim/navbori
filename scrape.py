@@ -18,6 +18,7 @@ class Functionalities:
             "X-RapidAPI-Host": "scrapers-proxy2.p.rapidapi.com"
         }
 
+
         response = requests.get(url, headers=headers, params=querystring, timeout=30)
         soup = BeautifulSoup(response.content, 'html.parser')
         print("soup data:")
@@ -46,8 +47,12 @@ class Functionalities:
             time.sleep(120)
             second_url = "https://marketkarsilastir.com/" + a_href
             second_querystring = {"url": second_url}
+            second_headers = {
+                "X-RapidAPI-Key": "92466fb05amsh87d78f5ee9b9f4fp100b06jsn84d686748ab9",
+                "X-RapidAPI-Host": "scrapers-proxy2.p.rapidapi.com"
+            }
 
-            response_second = requests.get(url, headers=headers, params=second_querystring, timeout=30)
+            response_second = requests.get(url, headers=second_headers, params=second_querystring, timeout=30)
 
             if response_second.status_code != 200:
                 print("Hata: Ürün isteği başarısız oldu:", a_href)
