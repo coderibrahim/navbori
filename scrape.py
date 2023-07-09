@@ -1,12 +1,8 @@
-import time
+import json
 
 import requests
-from bs4 import BeautifulSoup
 from bottle import Bottle, request
-import http.client
-from bson import ObjectId
-from pymongo import MongoClient
-import json
+from bs4 import BeautifulSoup
 
 
 class Functionalities:
@@ -23,7 +19,7 @@ class Functionalities:
         }
 
         response = requests.get(url, headers=headers, params=querystring, timeout=30)
-        soup = BeautifulSoup(response, 'html.parser')
+        soup = BeautifulSoup(response.content, 'html.parser')
 
         print("soup data:")
         print(soup.prettify())
