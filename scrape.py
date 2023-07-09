@@ -7,6 +7,7 @@ from bs4 import BeautifulSoup
 class Functionalities:
     def scrape_website(self, barcode_number):
         global soup
+
         search_url = 'https://marketkarsilastir.com/ara/' + barcode_number
 
         url = "https://scrapers-proxy2.p.rapidapi.com/standard"
