@@ -19,7 +19,7 @@ class Functionalities:
         }
 
 
-        response = requests.get(url, headers=headers, params=querystring, timeout=30)
+        response = requests.get(url, headers=headers, params=querystring, timeout=5)
         soup = BeautifulSoup(response.content, 'html.parser')
         print("soup data:")
         print(soup.prettify())
@@ -44,7 +44,6 @@ class Functionalities:
             a_href = a_element['href']
             a_text = a_element.text.strip()
 
-            time.sleep(120)
             second_url = "https://marketkarsilastir.com/" + a_href
             second_querystring = {"url": second_url}
             second_headers = {
