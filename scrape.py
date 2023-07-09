@@ -8,6 +8,7 @@ from bs4 import BeautifulSoup
 
 class Functionalities:
     def scrape_website(self, barcode_number):
+        global soup
         search_url = 'https://marketkarsilastir.com/ara/' + barcode_number
 
         url = "https://scrapers-proxy2.p.rapidapi.com/standard"
@@ -19,11 +20,17 @@ class Functionalities:
             "X-RapidAPI-Host": "scrapers-proxy2.p.rapidapi.com"
         }
 
-        response = requests.get(url, headers=headers, params=querystring, timeout=30)
-        soup = BeautifulSoup(response.content, 'html.parser')
+        try:
+            response = requests.get(url, headers=headers, params=querystring, timeout=30)
+            response.raise_for_status()  # Hata durumunda istisna oluştur
 
-        print("soup data:")
-        print(soup.prettify())
+            soup = BeautifulSoup(response.content, 'html.parser')
+            print("soup data:")
+            print(soup.prettify())
+
+            # Diğer işlemler devam eder...
+        except requests.exceptions.RequestException as e:
+            print("Hata:", e)
 
         products_div = soup.find('div', class_='products')
         if products_div is None:
@@ -45,10 +52,8 @@ class Functionalities:
             a_href = a_element['href']
             a_text = a_element.text.strip()
 
-            response_second = requests.get("https://marketkarsilastir.com/" + a_href)
-            inner_soup = BeautifulSoup(response_second.content, 'html.parser')
-
-            time.sleep(3)
+            response = requests.get("https://marketkarsilastir.com/" + a_href)
+            inner_soup = BeautifulSoup(response.content, 'html.parser')
 
             table = inner_soup.find('table', class_='table text-center table-hover')
             tbody = table.find('tbody')
