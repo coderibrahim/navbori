@@ -5,6 +5,7 @@ from bottle import Bottle, request
 from bs4 import BeautifulSoup
 
 
+
 class Functionalities:
     def scrape_website(self, barcode_number):
         search_url = 'https://marketkarsilastir.com/ara/' + barcode_number
