@@ -46,7 +46,7 @@ class Functionalities:
             a_href = a_element['href']
             a_text = a_element.text.strip()
 
-            response = requests.get("https://marketkarsilastir.com/" + a_href)
+            response = requests.get("https://marketkarsilastir.com/" + a_href, timeout=63)
             inner_soup = BeautifulSoup(response.content, 'html.parser')
 
             table = inner_soup.find('table', class_='table text-center table-hover')
