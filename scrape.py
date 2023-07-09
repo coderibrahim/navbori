@@ -44,13 +44,16 @@ class Functionalities:
             a_text = a_element.text.strip()
 
             time.sleep(120)
+            second_url = "https://marketkarsilastir.com/" + a_href
+            second_querystring = {"url": second_url}
 
-            response = requests.get("https://marketkarsilastir.com/" + a_href)
-            if response.status_code != 200:
+            response_second = requests.get(url, headers=headers, params=second_querystring, timeout=30)
+
+            if response_second.status_code != 200:
                 print("Hata: Ürün isteği başarısız oldu:", a_href)
                 continue
 
-            inner_soup = BeautifulSoup(response.content, 'html.parser')
+            inner_soup = BeautifulSoup(response_second.content, 'html.parser')
 
             table = inner_soup.find('table', class_='table text-center table-hover')
             if table is None:
