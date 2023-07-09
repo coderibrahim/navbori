@@ -1,11 +1,12 @@
 import json
 import time
 import requests
+from bottle import Bottle, request
 from bs4 import BeautifulSoup
+
 
 class Functionalities:
     def scrape_website(self, barcode_number):
-        global soup
         search_url = 'https://marketkarsilastir.com/ara/' + barcode_number
 
         url = "https://scrapers-proxy2.p.rapidapi.com/standard"
@@ -18,7 +19,6 @@ class Functionalities:
         }
 
         response = requests.get(url, headers=headers, params=querystring, timeout=30)
-
         soup = BeautifulSoup(response.content, 'html.parser')
         print("soup data:")
         print(soup.prettify())
@@ -43,13 +43,25 @@ class Functionalities:
             a_href = a_element['href']
             a_text = a_element.text.strip()
 
-            time.sleep(60)
+            time.sleep(120)
 
             response = requests.get("https://marketkarsilastir.com/" + a_href)
+            if response.status_code != 200:
+                print("Hata: Ürün isteği başarısız oldu:", a_href)
+                continue
+
             inner_soup = BeautifulSoup(response.content, 'html.parser')
 
             table = inner_soup.find('table', class_='table text-center table-hover')
+            if table is None:
+                print("Hata: Tablo bulunamadı:", a_href)
+                continue
+
             tbody = table.find('tbody')
+            if tbody is None:
+                print("Hata: Tbody bulunamadı:", a_href)
+                continue
+
             tr_items = tbody.find_all('tr')
 
             for tr in tr_items:
@@ -75,8 +87,25 @@ class Functionalities:
 
         return scraped_products_data
 
+
+app = Bottle()
 func = Functionalities()
 
-barcode_number = input("Enter barcode number: ")
-results = func.scrape_website(barcode_number)
-print(results)
+
+@app.route('/scrape', method='POST')
+def scrape_handler():
+    barcode_number = request.forms.get('barcode_number')
+    if barcode_number is None:
+        return json.dumps({'error': 'Barcode number is missing'})
+
+    results = func.scrape_website(barcode_number)
+
+    if 'error' in results:
+        return json.dumps({'error': results['error']})
+
+    results_serializable = json.dumps(results, default=str)
+    return results_serializable
+
+
+if __name__ == '__main__':
+    app.run(debug=True)
