@@ -43,7 +43,7 @@ class Functionalities:
             a_href = a_element['href']
             a_text = a_element.text.strip()
 
-            time.sleep(60)
+            time.sleep(120)
 
             response = requests.get("https://marketkarsilastir.com/" + a_href)
             if response.status_code != 200:
