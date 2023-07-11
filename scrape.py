@@ -112,7 +112,7 @@ def scrape_handler():
 
     results_serializable = json.dumps(results, default=str)
     
-    return results
+    return results_serializable
 
 
 
