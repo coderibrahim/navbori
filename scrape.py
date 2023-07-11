@@ -112,7 +112,8 @@ def scrape_handler():
 
     results_serializable = json.dumps(results, default=str)
     
-    return results_serializable
+    return results
+
 
 
 if __name__ == '__main__':
