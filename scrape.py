@@ -92,7 +92,7 @@ class Functionalities:
                 }
                 scraped_products_data.append(data)
 
-        return scraped_products_data
+        return json.dumps(scraped_products_data)
 
 
 app = Bottle()
@@ -111,6 +111,7 @@ def scrape_handler():
         return json.dumps({'error': results['error']})
 
     results_serializable = json.dumps(results, default=str)
+    
     return results_serializable
 
 
