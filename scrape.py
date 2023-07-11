@@ -92,7 +92,7 @@ class Functionalities:
                 }
                 scraped_products_data.append(data)
 
-        return json.dumps(scraped_products_data)
+        return scraped_products_data
 
 
 app = Bottle()
