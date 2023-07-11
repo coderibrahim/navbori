@@ -12,9 +12,9 @@ class Functionalities:
         url = "https://scrapers-proxy2.p.rapidapi.com/standard"
 
         querystring = {"url": search_url}
-
+        finishedkey = "1fe3b92a9bmsh2bde008e1a81054p1f19a4jsnd2a80d1560f3"
         headers = {
-            "X-RapidAPI-Key": "1fe3b92a9bmsh2bde008e1a81054p1f19a4jsnd2a80d1560f3",
+            "X-RapidAPI-Key": "de39c34fd4msh978e36c6dfc34b8p1bfbebjsnda3a060330ac",
             "X-RapidAPI-Host": "scrapers-proxy2.p.rapidapi.com"
         }
 
