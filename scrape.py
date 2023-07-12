@@ -19,7 +19,7 @@ class Functionalities:
         }
 
 
-        response = requests.get(url, headers=headers, params=querystring, timeout=5)
+        response = requests.get(url, headers=headers, params=querystring, timeout=50)
         soup = BeautifulSoup(response.content, 'html.parser')
         print("soup data:")
         print(soup.prettify())
