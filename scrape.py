@@ -84,6 +84,7 @@ class Functionalities:
 
                 data = {
                     'brand': brand,
+                    'product_image':img_src,
                     'brand_image': brand_image,
                     'barcode_number': barcode_number,
                     'name': a_text,
