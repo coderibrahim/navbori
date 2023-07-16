@@ -12,7 +12,9 @@ class Functionalities:
         url = "https://scrapers-proxy2.p.rapidapi.com/standard"
 
         querystring = {"url": search_url}
+        
         finishedkey = "1fe3b92a9bmsh2bde008e1a81054p1f19a4jsnd2a80d1560f3"
+        finishedSecondKey = "92466fb05amsh87d78f5ee9b9f4fp100b06jsn84d686748ab9"
         headers = {
             "X-RapidAPI-Key": "de39c34fd4msh978e36c6dfc34b8p1bfbebjsnda3a060330ac",
             "X-RapidAPI-Host": "scrapers-proxy2.p.rapidapi.com"
@@ -47,7 +49,7 @@ class Functionalities:
             second_url = "https://marketkarsilastir.com/" + a_href
             second_querystring = {"url": second_url}
             second_headers = {
-                "X-RapidAPI-Key": "92466fb05amsh87d78f5ee9b9f4fp100b06jsn84d686748ab9",
+                "X-RapidAPI-Key": "4366eff652msh87c2b68d7adc904p10beb0jsn8111010aa1b2",
                 "X-RapidAPI-Host": "scrapers-proxy2.p.rapidapi.com"
             }
 
