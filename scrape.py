@@ -12,11 +12,16 @@ class Functionalities:
         url = "https://scrapers-proxy2.p.rapidapi.com/standard"
 
         querystring = {"url": search_url}
+
+        ## finisked Key Mails
+        ## 41 21 quzycary ss00 beyany
         
         finishedkey = "1fe3b92a9bmsh2bde008e1a81054p1f19a4jsnd2a80d1560f3"
         finishedSecondKey = "92466fb05amsh87d78f5ee9b9f4fp100b06jsn84d686748ab9"
+        thirtyKey = "de39c34fd4msh978e36c6dfc34b8p1bfbebjsnda3a060330ac"
+        
         headers = {
-            "X-RapidAPI-Key": "de39c34fd4msh978e36c6dfc34b8p1bfbebjsnda3a060330ac",
+            "X-RapidAPI-Key": "d4e9ae81b6msh1c14feddac349e4p153b96jsn7a9eeb28285c",
             "X-RapidAPI-Host": "scrapers-proxy2.p.rapidapi.com"
         }
 
